@@ -1,0 +1,70 @@
+.tree-wrapper {
+  width: 100%;
+  overflow: auto;
+  padding: 1.5rem 0 2rem;
+}
+
+.tree-canvas {
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 320px;
+  transform-origin: top center;
+  transition: transform 160ms ease;
+}
+
+.tree-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.tree-children {
+  position: relative;
+  padding-top: 2.5rem;
+  width: 100%;
+}
+
+.tree-children-nodes {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.tree-node-placeholder {
+  width: 15rem;
+  min-height: 1px;
+}
+
+.tree-connector {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 60px;
+  pointer-events: none;
+}
+
+.tree-connector path {
+  stroke: rgba(99, 102, 241, 0.35);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+
+@media (max-width: 1024px) {
+  .tree-canvas {
+    justify-content: flex-start;
+    transform-origin: top left;
+  }
+
+  .tree-children-nodes {
+    justify-content: flex-start;
+  }
+}
