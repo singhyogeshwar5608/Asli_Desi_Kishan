@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 export const formatBytes = (bytes?: number | null) => {
   if (bytes === undefined || bytes === null || Number.isNaN(bytes)) {
     return '—';
@@ -36,5 +34,6 @@ export const getFileNameFromUrl = (url: string) => {
   } catch (error) {
     const parts = url.split('/');
     return parts[parts.length - 1] || url;
+    return value;
   }
 };

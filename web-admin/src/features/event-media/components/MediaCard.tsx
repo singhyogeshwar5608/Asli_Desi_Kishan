@@ -1,6 +1,6 @@
-import { Check, Edit, ImageIcon, Trash2, Video } from 'lucide-react';
+import { Check, Edit, Eye, ImageIcon, Link2, Trash2, Video } from 'lucide-react';
 import type { EventMediaItem } from '../types';
-import { formatDuration, getFileNameFromUrl } from '../utils';
+import { formatBytes, formatDateLabel, formatDuration } from '../utils';
 
 interface MediaCardProps {
   item: EventMediaItem;
@@ -8,17 +8,34 @@ interface MediaCardProps {
   onSelect?: (id: number, selected: boolean) => void;
   onEdit?: (item: EventMediaItem) => void;
   onDelete?: (item: EventMediaItem) => void;
+  onPreview?: (item: EventMediaItem) => void;
   onToggleStatus?: (item: EventMediaItem) => void;
+  onOpenLink?: (item: EventMediaItem) => void;
 }
 
-export const MediaCard = ({ item, selected = false, onSelect, onEdit, onDelete, onToggleStatus }: MediaCardProps) => {
+export const MediaCard = ({
+  item,
+  selected = false,
+  onSelect,
+  onEdit,
+  onDelete,
+  onPreview,
+  onToggleStatus,
+  onOpenLink,
+}: MediaCardProps) => {
   const durationLabel = formatDuration(item.durationSeconds ?? undefined);
-  const fileName = getFileNameFromUrl(item.fileUrl);
   const toggleSelect = () => onSelect?.(item.id, !selected);
 
   return (
     <div className={`rounded-3xl border bg-white/95 shadow-card-sm transition hover:-translate-y-0.5 hover:shadow-xl dark:bg-slate-900/80 ${selected ? 'border-primary/60 ring-2 ring-primary/30' : 'border-slate-100 dark:border-white/10'}`}>
--0 h-full w-full object-cover opacity-70" />}
+      <div className="relative">
+        <div className="h-44 w-full overflow-hidden rounded-3xl rounded-b-none bg-slate-100 dark:bg-white/10">
+          {item.mediaType === 'IMAGE' ? (
+            <img src={item.thumbnailUrl ?? item.fileUrl} alt={item.altText ?? item.title} className="h-full w-full object-cover" />
+          ) : (
+            <div className="relative flex h-full w-full items-center justify-center bg-slate-900 text-white">
+              <Video className="h-10 w-10 text-white/80" />
+              {item.thumbnailUrl && <img src={item.thumbnailUrl} alt={item.altText ?? item.title} className="absolute inset-0 h-full w-full object-cover opacity-70" />}
               {durationLabel && <span className="absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold">{durationLabel}</span>}
             </div>
           )}

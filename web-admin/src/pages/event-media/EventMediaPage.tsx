@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState, useEffect } from 'react';
 import { RefreshCw, Search, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import {
@@ -10,19 +10,20 @@ import {
   useUploadEventMedia,
 } from '../../features/event-media/api';
 import type {
+  CreateEventMediaPayload,
   EventMediaBulkAction,
   EventMediaFilters,
   EventMediaItem,
   MediaSortOption,
   MediaStatusFilter,
   MediaTypeFilter,
-  SupportedMediaType,
+  UploadMediaResponseItem,
 } from '../../features/event-media/types';
 import { MediaTypeTabs } from '../../features/event-media/components/MediaTypeTabs';
 import { UploadDropzone } from '../../features/event-media/components/UploadDropzone';
 import { MediaCard } from '../../features/event-media/components/MediaCard';
 import { useMediaSelection } from '../../features/event-media/hooks/useMediaSelection';
-import { getFileNameFromUrl } from '../../features/event-media/utils';
+import { Modal } from '../../components/modal';
 
 const statusOptions: Array<{ label: string; value: MediaStatusFilter }> = [
   { label: 'All statuses', value: 'all' },
