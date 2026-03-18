@@ -21,6 +21,7 @@ import 'screens/wishlist_screen.dart';
 import 'screens/register_member_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
+import 'screens/menu_screen.dart';
 import 'state/product_catalog_state.dart';
 import 'state/theme_controller.dart';
 import 'state/cart_state.dart';
@@ -107,6 +108,7 @@ class _NetShopAppState extends State<NetShopApp> {
                     RegisterMemberScreen.routeName: (_) => const RegisterMemberScreen(),
                     MemberDetailScreen.routeName: (_) => const MemberDetailScreen(),
                     SettingsScreen.routeName: (_) => const SettingsScreen(),
+                    MenuScreen.routeName: (_) => const MenuScreen(),
                     LoginScreen.routeName: (_) => const LoginScreen(),
                     SignupScreen.routeName: (_) => const SignupScreen(),
                   },

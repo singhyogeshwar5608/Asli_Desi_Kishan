@@ -31,11 +31,11 @@ export const MediaCard = ({
       <div className="relative">
         <div className="h-44 w-full overflow-hidden rounded-3xl rounded-b-none bg-slate-100 dark:bg-white/10">
           {item.mediaType === 'IMAGE' ? (
-            <img src={item.thumbnailUrl ?? item.fileUrl} alt={item.altText ?? item.title} className="h-full w-full object-cover" />
+            <img src={item.thumbnailUrl ?? item.fileUrl} className="h-full w-full object-cover" />
           ) : (
             <div className="relative flex h-full w-full items-center justify-center bg-slate-900 text-white">
               <Video className="h-10 w-10 text-white/80" />
-              {item.thumbnailUrl && <img src={item.thumbnailUrl} alt={item.altText ?? item.title} className="absolute inset-0 h-full w-full object-cover opacity-70" />}
+              {item.thumbnailUrl && <img src={item.thumbnailUrl} className="absolute inset-0 h-full w-full object-cover opacity-70" />}
               {durationLabel && <span className="absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold">{durationLabel}</span>}
             </div>
           )}
@@ -59,11 +59,6 @@ export const MediaCard = ({
       </div>
       <div className="space-y-4 p-5">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Media</p>
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{item.title}</h3>
-            {item.caption && <p className="text-sm text-slate-500 dark:text-slate-400">{item.caption}</p>}
-          </div>
           <button
             type="button"
             onClick={() => onToggleStatus?.(item)}

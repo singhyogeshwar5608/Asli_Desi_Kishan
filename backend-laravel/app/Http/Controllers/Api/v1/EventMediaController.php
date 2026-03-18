@@ -56,7 +56,6 @@ class EventMediaController extends Controller
         $page = $validated['page'] ?? 1;
 
         $paginator = $query->paginate($limit, ['*'], 'page', $page);
-
         return response()->json([
             'data' => EventMediaResource::collection($paginator->items()),
             'meta' => [

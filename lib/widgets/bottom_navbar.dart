@@ -3,7 +3,7 @@ import '../screens/withdraw_screen.dart';
 import '../theme/app_theme.dart';
 import '../screens/all_products_screen.dart';
 import '../screens/wallet_screen.dart';
-import '../screens/profile_screen.dart';
+import '../screens/menu_screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -36,9 +36,9 @@ class BottomNavBar extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed(WalletScreen.routeName),
           ),
           _NavItem(
-            icon: Icons.person,
-            label: 'Profile',
-            onTap: () => Navigator.of(context).pushNamed(ProfileScreen.routeName),
+            icon: Icons.menu,
+            label: 'Menu',
+            onTap: () => Navigator.of(context).pushNamed(MenuScreen.routeName),
           ),
         ],
       ),

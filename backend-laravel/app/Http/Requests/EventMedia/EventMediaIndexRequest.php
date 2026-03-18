@@ -8,17 +8,20 @@ class EventMediaIndexRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->role === 'ADMIN';
+        return true;
     }
 
     protected function prepareForValidation(): void
     {
         $this->merge([
             'media_type' => $this->input('mediaType', $this->input('media_type')),
-            'is_active' => $this->input('status'),
             'sort' => $this->input('sort', $this->input('order')),
             'search' => $this->input('search', $this->input('query')),
         ]);
+
+        if ($this->filled('status')) {
+            $this->merge(['is_active' => $this->input('status')]);
+        }
     }
 
     public function rules(): array

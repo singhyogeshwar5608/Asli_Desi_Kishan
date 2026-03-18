@@ -15,6 +15,10 @@ const EVENT_MEDIA_KEY = ['event-media'];
 
 const mapEventMedia = (payload: any): EventMediaItem => ({
   id: Number(payload.id),
+  title: payload.title ?? 'Untitled media',
+  caption: payload.caption ?? undefined,
+  description: payload.description ?? undefined,
+  altText: payload.altText ?? payload.alt_text ?? undefined,
   mediaType: (payload.mediaType ?? payload.media_type ?? 'IMAGE').toUpperCase(),
   fileUrl: payload.fileUrl ?? payload.file_url ?? '',
   thumbnailUrl: payload.thumbnailUrl ?? payload.thumbnail_url ?? undefined,
@@ -58,6 +62,7 @@ const toServerPayload = (payload: Partial<CreateEventMediaPayload>) => {
     fileSizeBytes: 'file_size_bytes',
     durationSeconds: 'duration_seconds',
     mediaType: 'media_type',
+    altText: 'alt_text',
     sortOrder: 'sort_order',
     isActive: 'is_active',
   };

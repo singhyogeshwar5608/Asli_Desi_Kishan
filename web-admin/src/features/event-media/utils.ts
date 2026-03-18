@@ -23,17 +23,14 @@ export const formatDuration = (value?: number | null) => {
 
 export const formatDateLabel = (value?: string | null) => {
   if (!value) return '—';
-  return dayjs(value).format('MMM D, YYYY');
-};
-
-export const getFileNameFromUrl = (url: string) => {
   try {
-    const parsed = new URL(url);
-    const segments = parsed.pathname.split('/').filter(Boolean);
-    return segments[segments.length - 1] ?? 'media-file';
+    const date = new Date(value);
+    return date.toLocaleDateString(undefined, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   } catch (error) {
-    const parts = url.split('/');
-    return parts[parts.length - 1] || url;
     return value;
   }
 };

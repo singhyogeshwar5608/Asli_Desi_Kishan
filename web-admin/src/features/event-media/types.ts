@@ -2,6 +2,10 @@ export type SupportedMediaType = 'IMAGE' | 'VIDEO';
 
 export interface EventMediaItem {
   id: number;
+  title: string;
+  caption?: string | null;
+  description?: string | null;
+  altText?: string | null;
   mediaType: SupportedMediaType;
   fileUrl: string;
   thumbnailUrl?: string | null;
@@ -39,6 +43,10 @@ export interface UploadMediaResponseItem {
 }
 
 export interface CreateEventMediaPayload {
+  title: string;
+  caption?: string;
+  description?: string;
+  altText?: string;
   mediaType: SupportedMediaType;
   fileUrl: string;
   thumbnailUrl?: string;

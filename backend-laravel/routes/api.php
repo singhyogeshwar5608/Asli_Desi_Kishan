@@ -19,6 +19,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
     });
 
     Route::get('products/public', [ProductController::class, 'publicIndex'])->name('products.public');
+    Route::get('event-media', [EventMediaController::class, 'index'])->name('event-media.public-index');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', fn (Request $request) => $request->user())->name('user');
@@ -48,7 +49,6 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::post('media/members/profile', [MediaController::class, 'uploadMemberProfile'])->name('media.members.profile');
 
         Route::prefix('event-media')->name('event-media.')->group(function () {
-            Route::get('/', [EventMediaController::class, 'index'])->name('index');
             Route::post('/', [EventMediaController::class, 'store'])->name('store');
             Route::post('/upload', [EventMediaController::class, 'upload'])->name('upload');
             Route::post('/bulk', [EventMediaController::class, 'bulkAction'])->name('bulk');
