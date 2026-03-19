@@ -5,6 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/product_entry.dart';
+import '../models/event_media_item.dart';
+import '../models/adk_event.dart';
 
 class ApiClient {
   ApiClient._();
@@ -48,6 +50,50 @@ class ApiClient {
     return _parseProductList(response, context: 'Fetch public products');
   }
 
+  Future<EventMediaResponse> fetchEventMedia({
+    int page = 1,
+    int limit = 50,
+    String? search,
+    String? mediaType,
+    String? status,
+    String? sort,
+  }) async {
+    final query = <String, String>{
+      'page': '$page',
+      'limit': '$limit',
+      if (search != null && search.trim().isNotEmpty) 'search': search.trim(),
+      if (mediaType != null && mediaType.isNotEmpty) 'mediaType': mediaType,
+      if (status != null && status.isNotEmpty) 'status': status,
+      if (sort != null && sort.isNotEmpty) 'sort': sort,
+    };
+    final uri = _buildUri('event-media', query);
+    final response = await _httpClient.get(uri, headers: const {'Content-Type': 'application/json'});
+    _throwIfNeeded(response, context: 'Fetch event media');
+    final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+    return EventMediaResponse.fromJson(decoded);
+  }
+
+  Future<AdkEventResponse> fetchAdkEvents({
+    int page = 1,
+    int limit = 20,
+    String? search,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    final query = <String, String>{
+      'page': '$page',
+      'limit': '$limit',
+      if (search != null && search.trim().isNotEmpty) 'search': search.trim(),
+      if (startDate != null) 'start_date': _dateOnly(startDate),
+      if (endDate != null) 'end_date': _dateOnly(endDate),
+    };
+    final uri = _buildUri('admin/events', query);
+    final response = await _httpClient.get(uri, headers: const {'Content-Type': 'application/json'});
+    _throwIfNeeded(response, context: 'Fetch ADK events');
+    final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+    return AdkEventResponse.fromJson(decoded);
+  }
+
   Map<String, String> _authorizedHeaders() {
     final token = _accessToken;
     if (token == null || token.isEmpty) {
@@ -63,6 +109,8 @@ class ApiClient {
     final uri = Uri.parse('$_baseUrl/$pathSegment');
     return uri.replace(queryParameters: query);
   }
+
+  String _dateOnly(DateTime date) => date.toIso8601String().split('T').first;
 
   List<ProductCatalogEntry> _parseProductList(http.Response response, {required String context}) {
     _throwIfNeeded(response, context: context);

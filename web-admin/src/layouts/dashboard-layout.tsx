@@ -10,6 +10,7 @@ const navItems = [
   { label: 'Categories', path: '/categories' },
   { label: 'Products', path: '/products' },
   { label: 'Event Media', path: '/event-media' },
+  { label: 'ADK Events', path: '/adk-events' },
   { label: 'Binary Tree', path: '/binary-tree' },
   { label: 'Orders', path: '/orders' },
   { label: 'Coupons', path: '/coupons' },

@@ -11,6 +11,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import CategoryPage from './pages/categories/CategoryPage';
 import BinaryTreePage from './pages/binary-tree/BinaryTree';
 import { EventMediaPage } from './pages/event-media/EventMediaPage';
+import { AdkEventsPage } from './pages/adk-events/AdkEventsPage';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/event-media" element={<EventMediaPage />} />
+          <Route path="/adk-events" element={<AdkEventsPage />} />
           <Route path="/binary-tree" element={<BinaryTreePage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/coupons" element={<CouponsPage />} />

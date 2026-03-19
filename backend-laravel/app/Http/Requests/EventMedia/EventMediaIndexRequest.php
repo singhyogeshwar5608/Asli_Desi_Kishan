@@ -13,14 +13,25 @@ class EventMediaIndexRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $mediaType = $this->input('mediaType', $this->input('media_type'));
+        if (is_string($mediaType) && strtoupper($mediaType) === 'ALL') {
+            $mediaType = null;
+        }
+
+        $status = $this->input('status');
+        if (is_string($status) && strtolower($status) === 'all') {
+            $status = null;
+        }
+
         $this->merge([
-            'media_type' => $this->input('mediaType', $this->input('media_type')),
+            'media_type' => $mediaType,
             'sort' => $this->input('sort', $this->input('order')),
             'search' => $this->input('search', $this->input('query')),
+            'status' => $status,
         ]);
 
-        if ($this->filled('status')) {
-            $this->merge(['is_active' => $this->input('status')]);
+        if ($status !== null && $status !== '') {
+            $this->merge(['is_active' => $status]);
         }
     }
 

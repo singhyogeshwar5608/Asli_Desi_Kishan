@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\EventMediaController;
 use App\Http\Controllers\Api\v1\MemberController;
 use App\Http\Controllers\Api\v1\MediaController;
+use App\Http\Controllers\Api\v1\MediaProxyController;
+use App\Http\Controllers\Api\v1\AdkEventController;
 use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\ReportController;
 use App\Http\Controllers\Api\ProductController;
@@ -20,6 +22,11 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
 
     Route::get('products/public', [ProductController::class, 'publicIndex'])->name('products.public');
     Route::get('event-media', [EventMediaController::class, 'index'])->name('event-media.public-index');
+    Route::get('admin/events', [AdkEventController::class, 'index'])->name('events.public-index');
+    Route::get('admin/events/{event}', [AdkEventController::class, 'show'])->name('events.public-show');
+    Route::match(['GET', 'OPTIONS'], 'media/{path}', MediaProxyController::class)
+        ->where('path', '.*')
+        ->name('media-proxy');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/user', fn (Request $request) => $request->user())->name('user');
@@ -47,6 +54,12 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
 
         Route::post('media/products', [MediaController::class, 'uploadProducts'])->name('media.products.upload');
         Route::post('media/members/profile', [MediaController::class, 'uploadMemberProfile'])->name('media.members.profile');
+
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::post('events', [AdkEventController::class, 'store'])->name('events.store');
+            Route::put('events/{event}', [AdkEventController::class, 'update'])->name('events.update');
+            Route::delete('events/{event}', [AdkEventController::class, 'destroy'])->name('events.destroy');
+        });
 
         Route::prefix('event-media')->name('event-media.')->group(function () {
             Route::post('/', [EventMediaController::class, 'store'])->name('store');

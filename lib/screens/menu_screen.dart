@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../screens/all_products_screen.dart';
+// import '../screens/all_products_screen.dart';
 import '../screens/notifications_screen.dart';
 import '../screens/wishlist_screen.dart';
+import '../screens/media_listing_screen.dart';
+import '../screens/adk_events_screen.dart';
+import '../screens/product_catalogue_screen.dart';
 import '../theme/app_theme.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -37,14 +40,14 @@ class MenuScreen extends StatelessWidget {
           subtitle: 'Upload & manage event visuals',
           icon: Icons.collections_bookmark,
           color: AppColors.primary,
-          onTap: () => _showSoon(context),
+          onTap: () => Navigator.of(context).pushNamed(MediaListingScreen.routeName),
         ),
         _MenuItem(
           title: 'Product Catalogue',
           subtitle: 'Browse every product line',
           icon: Icons.inventory_2,
           color: const Color(0xFF6366F1),
-          onTap: () => Navigator.of(context).pushNamed(AllProductsScreen.routeName),
+          onTap: () => Navigator.of(context).pushNamed(ProductCatalogueScreen.routeName),
         ),
         _MenuItem(
           title: 'Contact Us',
@@ -54,11 +57,11 @@ class MenuScreen extends StatelessWidget {
           onTap: () => _showSoon(context),
         ),
         _MenuItem(
-          title: 'APC Events',
+          title: 'ADK Events',
           subtitle: 'Upcoming meetups & webinars',
           icon: Icons.event_available,
           color: const Color(0xFFF97316),
-          onTap: () => _showSoon(context),
+          onTap: () => Navigator.of(context).pushNamed(AdkEventsScreen.routeName),
         ),
         _MenuItem(
           title: 'Delivery Center',
@@ -105,15 +108,15 @@ class _MenuCard extends StatelessWidget {
     return InkWell(
       onTap: item.onTap,
       borderRadius: BorderRadius.circular(18),
-      splashColor: item.color.withOpacity(0.15),
+      splashColor: item.color.withValues(alpha: 0.15),
       child: Ink(
         decoration: BoxDecoration(
           color: theme.cardColor,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: theme.dividerColor.withOpacity(isDark ? 0.3 : 0.5)),
+          border: Border.all(color: theme.dividerColor.withValues(alpha: isDark ? 0.3 : 0.5)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.35 : 0.08),
+              color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.08),
               blurRadius: 20,
               offset: const Offset(0, 12),
             ),
@@ -126,7 +129,7 @@ class _MenuCard extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: item.color.withOpacity(0.12),
+                color: item.color.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(item.icon, color: item.color, size: 26),
@@ -144,7 +147,7 @@ class _MenuCard extends StatelessWidget {
                   Text(
                     item.subtitle,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
+                      color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
