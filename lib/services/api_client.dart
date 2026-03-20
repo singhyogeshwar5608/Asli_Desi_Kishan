@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../models/product_entry.dart';
 import '../models/event_media_item.dart';
 import '../models/adk_event.dart';
+import '../models/catalogue_page.dart';
 
 class ApiClient {
   ApiClient._();
@@ -20,6 +21,42 @@ class ApiClient {
     final url = dotenv.env['API_BASE_URL'] ?? 'http://127.0.0.1:8000/api/v1';
     return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
   }
+
+class CataloguePageResponse {
+  const CataloguePageResponse({required this.data, required this.meta});
+
+  final List<CataloguePage> data;
+  final CatalogueMeta meta;
+
+  factory CataloguePageResponse.fromJson(Map<String, dynamic> json) {
+    final items = (json['data'] as List? ?? const [])
+        .whereType<Map<String, dynamic>>()
+        .map(CataloguePage.fromJson)
+        .toList(growable: false);
+    return CataloguePageResponse(
+      data: items,
+      meta: CatalogueMeta.fromJson(json['meta'] as Map<String, dynamic>? ?? const {}),
+    );
+  }
+}
+
+class CatalogueMeta {
+  const CatalogueMeta({required this.page, required this.limit, required this.total, required this.pages});
+
+  final int page;
+  final int limit;
+  final int total;
+  final int pages;
+
+  factory CatalogueMeta.fromJson(Map<String, dynamic> json) {
+    return CatalogueMeta(
+      page: (json['page'] as num?)?.toInt() ?? 1,
+      limit: (json['limit'] as num?)?.toInt() ?? 0,
+      total: (json['total'] as num?)?.toInt() ?? 0,
+      pages: (json['pages'] as num?)?.toInt() ?? 0,
+    );
+  }
+}
 
   String get baseServerUrl {
     final apiUrl = _baseUrl;
@@ -92,6 +129,19 @@ class ApiClient {
     _throwIfNeeded(response, context: 'Fetch ADK events');
     final decoded = jsonDecode(response.body) as Map<String, dynamic>;
     return AdkEventResponse.fromJson(decoded);
+  }
+
+  Future<CataloguePageResponse> fetchCataloguePages({int limit = 100, int page = 1, bool? isActive}) async {
+    final query = <String, String>{
+      'page': '$page',
+      'limit': '$limit',
+      if (isActive != null) 'is_active': isActive ? '1' : '0',
+    };
+    final uri = _buildUri('catalogue', query);
+    final response = await _httpClient.get(uri, headers: const {'Content-Type': 'application/json'});
+    _throwIfNeeded(response, context: 'Fetch catalogue pages');
+    final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+    return CataloguePageResponse.fromJson(decoded);
   }
 
   Map<String, String> _authorizedHeaders() {

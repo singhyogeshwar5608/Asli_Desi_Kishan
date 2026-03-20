@@ -24,6 +24,7 @@ import 'screens/signup_screen.dart';
 import 'screens/menu_screen.dart';
 import 'screens/media_listing_screen.dart';
 import 'screens/adk_events_screen.dart';
+import 'screens/product_catalogue_screen.dart';
 import 'state/product_catalog_state.dart';
 import 'state/theme_controller.dart';
 import 'state/cart_state.dart';
@@ -113,6 +114,7 @@ class _NetShopAppState extends State<NetShopApp> {
                     MenuScreen.routeName: (_) => const MenuScreen(),
                     MediaListingScreen.routeName: (_) => const MediaListingScreen(),
                     AdkEventsScreen.routeName: (_) => const AdkEventsScreen(),
+                    ProductCatalogueScreen.routeName: (_) => const ProductCatalogueScreen(),
                     LoginScreen.routeName: (_) => const LoginScreen(),
                     SignupScreen.routeName: (_) => const SignupScreen(),
                   },
